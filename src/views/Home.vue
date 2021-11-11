@@ -1,18 +1,36 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <c-stack maxW="sm" mx="auto">
+    <c-input
+      type="text"
+      placeholder="search"
+      variant="outline"
+      size="sm"
+    ></c-input>
+
+    <c-box border="1px solid">
+      <c-text>location</c-text>
+      <c-text>date</c-text>
+      <c-text>temp</c-text>
+      <c-text>description</c-text>
+    </c-box>
+  </c-stack>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<script lang="js">
+import {CStack,CBox, CInput, CText} from '@chakra-ui/vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
-  }
+    CStack,
+    CBox,
+    CInput,
+    CText
+  },
+  data() {
+    return {
+      message: 'Hello Vue!',
+    }
+  },
 }
 </script>
