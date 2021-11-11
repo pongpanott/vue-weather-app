@@ -1,8 +1,15 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import Chakra, { CThemeProvider } from "@chakra-ui/vue";
+import axios from "axios";
+import VueAxios from "vue-axios";
 
-Vue.config.productionTip = false
+Vue.use(Chakra);
+Vue.use(VueAxios, axios);
+Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  router,
+  render: (h) => h(CThemeProvider, [h(App)]),
+}).$mount("#app");
