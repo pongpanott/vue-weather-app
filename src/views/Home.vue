@@ -18,7 +18,7 @@
         border="1px solid lightgrey"
         rounded="lg"
         shadow="md"
-        v-if="weather && !notFound"
+        v-if="weather && !notFound && !loading"
       >
         <c-text align="center" fontSize="2xl" mb="2"
           >{{ location }}, {{ country }}</c-text
@@ -29,6 +29,9 @@
       </c-box>
       <c-box v-if="notFound" mt="6">
         <c-text align="center"> Location not found ! </c-text>
+      </c-box>
+      <c-box v-if="loading" mt="6">
+        <c-text align="center"> Loading . . . </c-text>
       </c-box>
     </c-stack>
   </c-box>
@@ -55,11 +58,13 @@ export default {
       temp: null,
       weather: null,
       notFound: false,
+      loading:false,
     }
   },
   methods: {
     fetchWeather(e) {
       if (e.key === "Enter" && this.query !== '') {
+        this.loading = true
         this.axios
         .get(`https://api.openweathermap.org/data/2.5/weather?q=${this.query}&units=metric&appid=${process.env.VUE_APP_WEATHER_APIKEY}`)
         .then(response => {
@@ -72,6 +77,8 @@ export default {
       }
     },
     setResults (result) {
+      this.loading = false;
+      this.query = '';
       this.location = result.name;
       this.country = result.sys.country;
       this.weather = result.weather[0].main;
@@ -80,6 +87,7 @@ export default {
     },
     locationNotFound() {
       this.notFound = true;
+      this.loading = false;
       this.query = '';
     },
     changeBackground() {
